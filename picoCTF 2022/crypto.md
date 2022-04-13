@@ -167,3 +167,116 @@ m = pow(c, d, n)
 print(long_to_bytes(m))
 ```
 `FLAG: picoCTF{7c8625a1}`
+
+# Sequences
+
+Matrix diagonalization problem. Any recurrence relation can be expressed using matrixes, from which, we can calculate the `n-th term` in the sequence very efficiently.
+```python
+import math
+import hashlib
+import sys
+#from tqdm import tqdm
+import functools
+from numpy.core.numerictypes import issubdtype
+from numpy.core.numeric import concatenate, isscalar, binary_repr, identity, asanyarray, dot
+import numpy as np
+
+A = np.array([[21, 301, -9549, 55692], [1, 0, 0, 0],
+              [0, 1, 0, 0], [0, 0, 1, 0]], dtype=np.int64)
+k = int(2e7)
+F = np.array([[4], [3], [2], [1]], dtype=np.int64)
+
+mod = 10**10000
+
+ITERS = int(2e7)
+VERIF_KEY = "96cc5f3b460732b442814fd33cf8537c"
+ENCRYPTED_FLAG = bytes.fromhex(
+    "42cbbce1487b443de1acf4834baed794f4bbd0dfe08b5f3b248ef7c32b")
+
+# This will overflow the stack, it will need to be significantly optimized in order to get the answer :)
+
+#@functools.cache
+
+
+def m_func(i):
+    if i == 0:
+        return 1
+    if i == 1:
+        return 2
+    if i == 2:
+        return 3
+    if i == 3:
+        return 4
+
+    return 55692*m_func(i-4) - 9549*m_func(i-3) + 301*m_func(i-2) + 21*m_func(i-1)
+
+# Decrypt the flag
+
+
+def decrypt_flag(sol):
+    sol = sol % (10**10000)
+    sol = str(sol)
+    sol_md5 = hashlib.md5(sol.encode()).hexdigest()
+
+    if sol_md5 != VERIF_KEY:
+        print("Incorrect solution")
+        return
+        #sys.exit(1)
+
+    key = hashlib.sha256(sol.encode()).digest()
+    flag = bytearray([char ^ key[i]
+                      for i, char in enumerate(ENCRYPTED_FLAG)]).decode()
+
+    return flag
+
+
+def matrix_power(M, n, mod_val):
+    # Implementation shadows numpy's matrix_power, but with modulo included
+    M = asanyarray(M)
+    if len(M.shape) != 2 or M.shape[0] != M.shape[1]:
+        raise ValueError("input  must be a square array")
+    if not issubdtype(type(n), int):
+        raise TypeError("exponent must be an integer")
+
+    from numpy.linalg import inv
+
+    if n == 0:
+        M = M.copy()
+        M[:] = identity(M.shape[0])
+        return M
+    elif n < 0:
+        M = inv(M)
+        n *= -1
+
+    result = M % mod_val
+    if n <= 3:
+        for _ in range(n-1):
+            result = dot(result, M) % mod_val
+        return result
+
+    # binary decompositon to reduce the number of matrix
+    # multiplications for n > 3
+    beta = binary_repr(n)
+    Z, q, t = M, 0, len(beta)
+    while beta[t-q-1] == '0':
+        Z = dot(Z, Z) % mod_val
+        q += 1
+    result = Z
+    for k in range(q+1, t):
+        Z = dot(Z, Z) % mod_val
+        if beta[t-k-1] == '1':
+            result = dot(result, Z) % mod_val
+    return result % mod_val
+
+
+if __name__ == "__main__":
+    X = matrix_power(A, k - 1, mod)
+    R = X.dot(F)
+    for i in range(len(R)):
+        sol = R[i, 0]
+        m = decrypt_flag(sol)
+        if m is not None and 'picoCTF' in m:
+            print(m)
+            break
+```
+`FLAG: picoCTF{b1g_numb3rs_4ebc92cc}`
