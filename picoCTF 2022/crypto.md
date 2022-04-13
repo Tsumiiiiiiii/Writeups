@@ -92,3 +92,46 @@ We plug the ciphertexy and the key in [this](https://www.dcode.fr/vigenere-ciphe
   
 `FLAG: picoCTF{D0NT_US3_V1G3N3R3_C1PH3R_d85729g7}`
 
+# diffie-hellman
+
+Basic understanding of how key exchange works in [diffie-hellman](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange) is sufficient for this problem.  
+From the given information, we can easily generate the shared secret `sh` which will be the shift value for our ROT cipher. One catch here is that we do not know whether the shifting will be done backwards or forwards. So we try both of them and the one that creates a meaningful text is our flag.
+```python
+p = 13
+g = 5
+a, b = 7, 3
+A = pow(g, a, p)
+sh = pow(A, b, p) # this is the shared secret
+
+s = "H98A9W_H6UM8W_6A_9_D6C_5ZCI9C8I_DI9D987F"
+
+f = ""
+b = ""
+
+alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ans = ""
+
+n = len(alpha)
+for c in s:
+    if c in alpha:
+        x = alpha.index(c)
+        x += sh
+        x %= n
+        f += alpha[x]
+    else:
+        f += c
+
+for c in s:
+    if c in alpha:
+        x = alpha.index(c)
+        x -= sh
+        if x < 0:
+            x += n
+        b += alpha[x]
+    else:
+        b += c
+
+print("picoCTF{" + f + "}")
+print("picoCTF{" + b + "}")
+```
+`FLAG: picoCTF{C4354R_C1PH3R_15_4_817_0U7D473D_8D48432A}`
