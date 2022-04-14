@@ -57,7 +57,7 @@ Using an online ddecrypter like [this](https://www.boxentriq.com/code-breaking/r
 
 # substituion1
 
-The same approach is followed once again. There is a single catch here though. We get `picoCTF{FR3JU3NCY_4774CK5_4R3_C001_7AA384BC}` but the part `FR3JU3NCY` doesn't make any sense. We changed it to `FR3QU3NCY1 and voila!  
+The same approach is followed once again. There is a single catch here though. We get `picoCTF{FR3JU3NCY_4774CK5_4R3_C001_7AA384BC}` but the part `FR3JU3NCY` doesn't make any sense. We changed it to `FR3QU3NCY1` and voila!  
   
 `FLAG: picoCTF{FR3JU3NCY_4774CK5_4R3_C001_7AA384BC}`
 
