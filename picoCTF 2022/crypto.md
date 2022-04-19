@@ -139,7 +139,7 @@ print("picoCTF{" + b + "}")
 # Very Smooth
 
 From the hint and the title we understand this problem is about [pollard p-1 factorization](https://en.wikipedia.org/wiki/Pollard%27s_p_%E2%88%92_1_algorithm).  
-The algorithm itself is not that difficult to code, or, you can use an already implemented code. After you factr the modulus, everything is trivial from there.
+The algorithm itself is not that difficult to code, or, you can use an already implemented code. After you factor the modulus, everything is trivial from there.
 ```python
 import  math
 from Crypto.Util.number import long_to_bytes
