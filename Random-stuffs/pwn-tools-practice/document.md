@@ -16,18 +16,20 @@ It is just a python module guys. You should already know by now how to install a
 
 You can find problems of this type in the form of :
 
-** nc server-no. port-no.**
+```
+nc [server-no.] [port-no.]
+```
 
 For example : 
-
-**nc 192.168.3.1 5000**
-
+```
+nc 192.168.3.1 5000
+```
 If you have a terminal installed, and netcat is installed there, you can just copy paste that line in the terminal and you would be able to communicate with the server. 
 
 For our example problem, the form is like :
-
-**nc 127.0.0.1 5000** 
-
+```
+nc 127.0.0.1 5000 
+```
 You might have realized that I am using the ip of my localhost, and that is because i am hosting the challenge in my own pc. 
 
 What happens when I copy paste it in my terminal? 
