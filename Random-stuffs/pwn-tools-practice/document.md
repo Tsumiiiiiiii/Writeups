@@ -34,7 +34,7 @@ You might have realized that I am using the ip of my localhost, and that is beca
 
 What happens when I copy paste it in my terminal? 
 
-![[Pasted image 20230921095318.png]]
+![nc status](https://github.com/Tsumiiiiiiii/Writeups/blob/main/Random-stuffs/pwn-tools-practice/Pasted%20image%2020230921095318.png?raw=true)
 
 See? Now I can communicate with my server.
 
