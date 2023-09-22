@@ -1,5 +1,5 @@
 
-## Why pwntools??
+## Why pwntools?
 
 Quite often you might have encountered challenges that are interactive, that is, the server asks you some queries, you asnwer those queries and if you manage to answer all of them, you get the flag. 
 
@@ -163,7 +163,7 @@ For getting the flag, we can just take the line and print it out
 print(io.recvline())
 ```
 
-![[Pasted image 20230921102548.png]]
+![flag getting](https://github.com/Tsumiiiiiiii/Writeups/blob/8320cb2d2ced954f5ec153ea0a37d033a4a83655/Random-stuffs/pwn-tools-practice/Pasted%20image%2020230921102548.png)
 
 Voila, our job is done.
 
