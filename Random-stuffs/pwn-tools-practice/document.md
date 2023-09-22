@@ -204,36 +204,25 @@ If you are wondering what was the script for the server that you were communicat
 
 from random import randint
 
-print('For each of the 200 queries, check how many vowels are there in the given string.')
-
-def getRandomString():
-    ret = ''
-    for i in range(10):
-        c = randint(97, 97 + 26)
-        ret += chr(c)
-    return ret
-    
-def check(s):
-    ret = 0
-    for c in s:
-        if c in ['a', 'e', 'i', 'o', 'u']:
-            ret += 1
-    return ret
-
-for query in range(200):
-    print('Currently you are at query no. {}/200'.format(query + 1))
-    s = getRandomString()
-    print('How many vowels for the string : {}'.format(s))
-
-    x = int(input())
-    if x == check(s):
-        print('You passed this round!')
-    else:
-        print('Faillllllll')
-        exit(2)
-
 with open('flag.txt', 'r') as f:
-    print('Flag is :', f.read())
+    flag = f.read()
+
+print('Welcome to Kikis query service!')
+print('Answer Kikis questions correctly 300 times and thou shall be rewarded with the flag!')
+
+for query in range(1, 301):
+    a, b = randint(2**32, 2**35), randint(2**32, 2**35)
+    print('Currently at query {}/300.'.format(query))
+    print('Enter the sum of : {} {}'.format(a, b))
+
+    inp = int(input())
+    if inp == a + b:
+        print('Good job. You have passed this round!')
+    else:
+        print('You are doomed. No flag for you')
+        exit(2)
+
+print('Flag is : {}'.format(flag))
 ```
 ## Bonus
 
